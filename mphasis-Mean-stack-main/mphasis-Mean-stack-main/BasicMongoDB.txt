@@ -1,0 +1,53 @@
+db.createCollection("employees")
+db.employees.insertMany([  
+  {
+  empId: 1002,
+  empName: "Amit Kumar",
+  empSalary: 35000,
+  empDesignation: "Programmer",
+  empDOJ: Date()
+},
+  {
+  empId: 1003,
+  empName: "Sachin Desai",
+  empSalary: 15000,
+  empDesignation: "Programmer",
+  empDOJ: Date()
+},
+  {
+  empId: 1004,
+  empName: "Rohit Patel",
+  empSalary: 95000,
+  empDesignation: "Accountant",
+  empDOJ: Date()
+}
+])
+db.employees.find( {empId: 1002} )
+show collections
+db.getCollectionNames()
+db.employees.find({empDesignation: "Programmer", empDOJ: new Date()})
+db.employees.find({ empId: { $gt: 1002 } })
+db.employees.updateOne( { empName: "Sachin Desai" }, { $set: { empId: 1004} } ) 
+db.employees.find( { empName: "Sachin Desai" } ) 
+
+db.employees.updateOne( 
+  { empName: "Akash Gupta" }, 
+  {
+    $set: 
+      {
+  empId: 1005,
+  empName: "Akash Gupta",
+  empSalary: 85000,
+  empDesignation: "Clerk",
+  empDOJ: Date()
+}
+  }, 
+  { upsert: true }
+)
+db.employees.find()
+
+db.employees.updateMany( { $set: {"empDesignation":"Trainer"} )
+/*db.employees.find( {empId: 1002} )*/
+db.employees.deleteMany({ empDesignation: "Programmer" })
+
+

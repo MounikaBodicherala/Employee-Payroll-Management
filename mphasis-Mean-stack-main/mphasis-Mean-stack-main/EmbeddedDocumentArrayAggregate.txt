@@ -1,0 +1,74 @@
+========================================Embedded=============================
+db.createCollection("emp")
+db.emp.insertOne({
+  empId: 1002,
+  empName: "Amit Kumar",
+  empSalary: 35000,
+  empDesignation: "Programmer",
+  empDOJ: Date(),
+  department:{deptId:101,deptName:"Operations"}
+})
+db.emp.find()
+db.emp.find({department :{deptId:101}})
+
+========================================Embedded=============================
+
+
+
+db.createCollection("orders")
+db.orders.insertOne({
+  orderId: 1002,
+  orderDesc: "Order Description",
+  orderDate: Date(),
+  items:
+      [
+          {itemId:101,itemDesc:"Item 1 description",payment:{
+              paymentId:"P001",paymentType:"CREDIT Card",amount:34000
+          }},
+         {itemId:102,itemDesc:"Item 2 description",payment:{
+              paymentId:"P002",paymentType:"DEBIT Card",amount:14000
+          }},
+          
+      ]
+})
+db.orders.find({},{'items':{'itemId':101}})
+
+======================Aggregation================================================
+db.createCollection("emp")
+db.emp.insertMany([{
+  empId: 1001,
+  empName: "Sabbir Poonawala",
+  empSalary: 35000,
+  empDesignation: "Trainer",
+  empDOJ: Date(),
+  department:{deptId:101,deptName:"Learning and development"}
+},
+ {
+  empId: 1002,
+  empName: "Amit Kumar",
+  empSalary: 35000,
+  empDesignation: "Trainer",
+  empDOJ: Date(),
+  department:{deptId:101,deptName:"Learning and development"}
+},
+                   {
+  empId: 1003,
+  empName: "Amit Kumar",
+  empSalary: 35000,
+  empDesignation: "Programmer",
+  empDOJ: Date(),
+  department:{deptId:102,deptName:"Projects"}
+},
+                   {
+  empId: 1004,
+  empName: "Amit Kumar",
+  empSalary: 35000,
+  empDesignation: "Programmer",
+  empDOJ: Date(),
+  department:{deptId:101,deptName:"Projects"}
+}
+])
+
+db.emp.aggregate([
+  { $group: { _id: "$department.deptId", employeecount: { $sum: 1 } } }
+])
